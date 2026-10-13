@@ -1,5 +1,6 @@
 import 'package:booking_app/core/di/di.dart';
 import 'package:booking_app/home/presentation/bloc/home_bloc.dart';
+import 'package:booking_app/home/presentation/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,8 +40,15 @@ class _HomeState extends State<Home> {
 
             HomeLoaded loaded => ListView.builder(
               itemCount: loaded.categories.length,
-              itemBuilder: (_, i) =>
-                  ListTile(title: Text(loaded.categories[i].name)),
+              itemBuilder: (_, i) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: CategoryCard(
+                  category: loaded.categories[i],
+                  onTap: () {
+                    // TODO: navigate to category details
+                  },
+                ),
+              ),
             ),
           },
         ),
