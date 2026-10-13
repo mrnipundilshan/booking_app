@@ -1,0 +1,28 @@
+{
+    "categories": [
+        {
+            "id": "plumbing",
+            "name": "Plumbing"
+        },
+        {
+            "id": "electrical",
+            "name": "Electrical"
+        },
+        {
+            "id": "carpentry",
+            "name": "Carpentry"
+        },
+        {
+            "id": "painting",
+            "name": "Painting"
+        },
+        {
+            "id": "ac_repair",
+            "name": "AC Repair"
+        },
+        {
+            "id": "cleaning",
+            "name": "Cleaning"
+        }
+    ]
+}
