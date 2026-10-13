@@ -1,4 +1,7 @@
+import 'package:booking_app/core/database/app_database.dart';
 import 'package:booking_app/core/di/di.dart';
+import 'package:booking_app/features/booking/data/datasources/booking_local_datasource.dart';
+import 'package:booking_app/features/booking/data/datasources/booking_local_datasource_impl.dart';
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource.dart';
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource_impl.dart';
 import 'package:booking_app/features/booking/data/repositories/booking_repository_impl.dart';
@@ -10,13 +13,17 @@ import 'package:booking_app/features/booking/domain/usecases/get_my_bookings_use
 import 'package:booking_app/features/booking/presentation/bloc/booking_bloc.dart';
 import 'package:booking_app/features/booking/presentation/bloc/my_bookings_bloc.dart';
 
-void initBookingInjection() {
+Future<void> initBookingInjection() async {
   // data
+  final db = await AppDatabase.open();
+  sl.registerLazySingleton<BookingLocalDataSource>(
+    () => BookingLocalDataSourceImpl(db),
+  );
   sl.registerLazySingleton<BookingRemoteDataSource>(
     () => BookingRemoteDataSourceImpl(),
   );
   sl.registerLazySingleton<BookingRepository>(
-    () => BookingRepositoryImpl(sl()),
+    () => BookingRepositoryImpl(sl(), sl()),
   );
 
   // domain

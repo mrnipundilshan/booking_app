@@ -7,18 +7,21 @@ void main() {
   final sunday = DateTime(2026, 10, 18);
 
   group('BookingCost.calculate', () {
-    test('weekday booking has labour plus visiting charge and no surcharge', () {
-      final cost = BookingCost.calculate(
-        hourlyRate: 1500,
-        hours: 3,
-        date: wednesday,
-      );
+    test(
+      'weekday booking has labour plus visiting charge and no surcharge',
+      () {
+        final cost = BookingCost.calculate(
+          hourlyRate: 1500,
+          hours: 3,
+          date: wednesday,
+        );
 
-      expect(cost.labour, 4500);
-      expect(cost.visitingCharge, BookingCost.visitingChargeLkr);
-      expect(cost.weekendSurcharge, 0);
-      expect(cost.total, 5000);
-    });
+        expect(cost.labour, 4500);
+        expect(cost.visitingCharge, BookingCost.visitingChargeLkr);
+        expect(cost.weekendSurcharge, 0);
+        expect(cost.total, 5000);
+      },
+    );
 
     test('Saturday booking adds 15% of labour as weekend surcharge', () {
       expect(saturday.weekday, DateTime.saturday);

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource.dart';
@@ -7,14 +6,11 @@ import 'package:booking_app/features/booking/data/models/create_booking_request.
 import 'package:booking_app/features/booking/data/models/get_booked_slots_request.dart';
 import 'package:booking_app/features/booking/domain/entities/booking_status.dart';
 import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   BookingRemoteDataSourceImpl() : _bookings = _seed(DateTime.now());
 
   final List<BookingModel> _bookings;
-
-  List<BookingModel>? _myBookings;
 
   @override
   Future<List<BookingModel>> getBookings(GetBookedSlotsRequest request) async {
@@ -43,46 +39,10 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
       );
     }
 
-    final booking = BookingModel.fromJson({
+    return BookingModel.fromJson({
       ...request.toJson(),
       'id': _generateId(DateTime.now()),
     });
-    _bookings.add(booking);
-    return booking;
-  }
-
-  @override
-  Future<List<BookingModel>> getMyBookings() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return List.of(await _loadMyBookings());
-  }
-
-  @override
-  Future<BookingModel> cancelBooking(String bookingId) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final bookings = await _loadMyBookings();
-    final index = bookings.indexWhere((b) => b.id == bookingId);
-    if (index == -1) {
-      throw const BookingException('Booking not found.');
-    }
-    if (!bookings[index].canCancel(DateTime.now())) {
-      throw const BookingException('This booking can no longer be cancelled.');
-    }
-
-    final cancelled = BookingModel.fromJson({
-      ...bookings[index].toJson(),
-      'status': BookingStatus.cancelled.name,
-    });
-    bookings[index] = cancelled;
-    return cancelled;
-  }
-
-  Future<List<BookingModel>> _loadMyBookings() async {
-    if (_myBookings case final bookings?) return bookings;
-    final raw = await rootBundle.loadString('assets/data/bookings.json');
-    return _myBookings = (jsonDecode(raw)['bookings'] as List)
-        .map((b) => BookingModel.fromJson(b))
-        .toList();
   }
 
   String _generateId(DateTime now) {

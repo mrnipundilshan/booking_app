@@ -9,5 +9,5 @@ Future<void> setupDi() async {
   // features
   initHomeInjection();
   initProvidersInjection();
-  initBookingInjection();
+  await initBookingInjection();
 }

@@ -12,17 +12,25 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   int _index = 0;
+  int _bookingsVersion = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: _index,
-        children: const [Home(), ProvidersPage(), MyBookingsPage()],
+        children: [
+          const Home(),
+          const ProvidersPage(),
+          MyBookingsPage(key: ValueKey(_bookingsVersion)),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
+        onDestinationSelected: (i) => setState(() {
+          if (i == 2 && _index != 2) _bookingsVersion++;
+          _index = i;
+        }),
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
