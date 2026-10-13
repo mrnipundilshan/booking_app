@@ -1,3 +1,4 @@
+import 'package:booking_app/core/di/di.dart';
 import 'package:booking_app/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final _bloc = HomeBloc();
+  final _bloc = sl<HomeBloc>();
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _HomeState extends State<Home> {
             HomeLoaded loaded => ListView.builder(
               itemCount: loaded.categories.length,
               itemBuilder: (_, i) =>
-                  ListTile(title: Text(loaded.categories[i]['name'] as String)),
+                  ListTile(title: Text(loaded.categories[i].name)),
             ),
           },
         ),

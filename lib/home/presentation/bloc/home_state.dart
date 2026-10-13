@@ -11,7 +11,7 @@ final class HomeLoading extends HomeState {
 final class HomeLoaded extends HomeState {
   const HomeLoaded(this.categories);
 
-  final List<Map<String, dynamic>> categories;
+  final List<CategoryEntity> categories;
 }
 
 final class HomeError extends HomeState {
