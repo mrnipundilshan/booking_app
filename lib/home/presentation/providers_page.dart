@@ -50,7 +50,10 @@ class _ProvidersPageState extends State<ProvidersPage> {
                       itemCount: loaded.providers.length,
                       itemBuilder: (_, i) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                        child: ProviderCard(provider: loaded.providers[i]),
+                        child: ProviderCard(
+                          provider: loaded.providers[i],
+                          categoryName: widget.category.name,
+                        ),
                       ),
                     ),
           },
