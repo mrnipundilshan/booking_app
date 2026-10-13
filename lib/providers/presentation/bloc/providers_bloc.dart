@@ -1,6 +1,7 @@
 import 'package:booking_app/core/common/entities/provider_entity.dart';
 import 'package:booking_app/providers/domain/usecases/filter_providers_usecase.dart';
 import 'package:booking_app/providers/domain/usecases/get_all_providers_usecase.dart';
+import 'package:booking_app/providers/domain/usecases/sort_providers_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'providers_event.dart';
@@ -11,10 +12,19 @@ class AllProvidersBloc extends Bloc<AllProvidersEvent, AllProvidersState> {
 
   final FilterProvidersUseCase _filterProviders;
 
-  AllProvidersBloc(this._getAllProviders, this._filterProviders)
-    : super(const AllProvidersLoading()) {
+  final SortProvidersUseCase _sortProviders;
+
+  FilterProviders filter = const FilterProviders();
+  String? sortBy;
+
+  AllProvidersBloc(
+    this._getAllProviders,
+    this._filterProviders,
+    this._sortProviders,
+  ) : super(const AllProvidersLoading()) {
     on<LoadAllProviders>(_onLoad);
     on<FilterProviders>(_onFilter);
+    on<SortProviders>(_onSort);
   }
 
   Future<void> _onLoad(
@@ -32,16 +42,35 @@ class AllProvidersBloc extends Bloc<AllProvidersEvent, AllProvidersState> {
   Future<void> _onFilter(
     FilterProviders event,
     Emitter<AllProvidersState> emit,
-  ) async {
+  ) {
+    filter = event;
+    return _reload(emit);
+  }
+
+  Future<void> _onSort(SortProviders event, Emitter<AllProvidersState> emit) {
+    sortBy = event.sortBy;
+    return _reload(emit);
+  }
+
+  Future<void> _reload(Emitter<AllProvidersState> emit) async {
     emit(const AllProvidersLoading());
     try {
-      final providers = await _filterProviders(
-        categoryId: event.categoryId,
-        minRating: event.minRating,
-        minRate: event.minRate,
-        maxRate: event.maxRate,
-        availableOnly: event.availableOnly,
-      );
+      final providers = sortBy == null
+          ? await _filterProviders(
+              categoryId: filter.categoryId,
+              minRating: filter.minRating,
+              minRate: filter.minRate,
+              maxRate: filter.maxRate,
+              availableOnly: filter.availableOnly,
+            )
+          : await _sortProviders(
+              sortBy!,
+              categoryId: filter.categoryId,
+              minRating: filter.minRating,
+              minRate: filter.minRate,
+              maxRate: filter.maxRate,
+              availableOnly: filter.availableOnly,
+            );
       emit(AllProvidersLoaded(providers));
     } catch (e) {
       emit(AllProvidersError(e.toString()));

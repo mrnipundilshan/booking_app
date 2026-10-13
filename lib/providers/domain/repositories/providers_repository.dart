@@ -10,4 +10,13 @@ abstract class ProvidersRepository {
     int? maxRate,
     bool availableOnly = false,
   });
+
+  Future<List<ProviderEntity>> sortProviders(
+    String sortBy, {
+    String? categoryId,
+    double? minRating,
+    int? minRate,
+    int? maxRate,
+    bool availableOnly = false,
+  });
 }

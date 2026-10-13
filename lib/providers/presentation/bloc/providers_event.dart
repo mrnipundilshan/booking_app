@@ -23,3 +23,9 @@ final class FilterProviders extends AllProvidersEvent {
   final int? maxRate;
   final bool availableOnly;
 }
+
+final class SortProviders extends AllProvidersEvent {
+  const SortProviders(this.sortBy);
+
+  final String? sortBy;
+}

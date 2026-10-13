@@ -4,6 +4,7 @@ import 'package:booking_app/providers/data/datasources/providers_remote_datasour
 import 'package:booking_app/providers/data/repositories/providers_repository_impl.dart';
 import 'package:booking_app/providers/domain/repositories/providers_repository.dart';
 import 'package:booking_app/providers/domain/usecases/get_all_providers_usecase.dart';
+import 'package:booking_app/providers/domain/usecases/sort_providers_usecase.dart';
 import 'package:booking_app/providers/domain/usecases/filter_providers_usecase.dart';
 import 'package:booking_app/providers/presentation/bloc/providers_bloc.dart';
 
@@ -19,7 +20,8 @@ void initProvidersInjection() {
   // domain
   sl.registerLazySingleton(() => GetAllProvidersUseCase(sl()));
   sl.registerLazySingleton(() => FilterProvidersUseCase(sl()));
+  sl.registerLazySingleton(() => SortProvidersUseCase(sl()));
 
   // presentation
-  sl.registerFactory(() => AllProvidersBloc(sl(), sl()));
+  sl.registerFactory(() => AllProvidersBloc(sl(), sl(), sl()));
 }

@@ -18,7 +18,6 @@ class _ProvidersPageState extends State<ProvidersPage> {
   final _bloc = sl<AllProvidersBloc>();
 
   List<CategoryEntity> _categories = [];
-  FilterProviders _filter = const FilterProviders();
 
   @override
   void initState() {
@@ -44,11 +43,17 @@ class _ProvidersPageState extends State<ProvidersPage> {
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) =>
-          ProviderFilterSheet(categories: _categories, current: _filter),
+          ProviderFilterSheet(categories: _categories, current: _bloc.filter),
     );
-    if (filter == null) return;
-    setState(() => _filter = filter);
-    _bloc.add(filter);
+    if (filter != null) _bloc.add(filter);
+  }
+
+  PopupMenuItem<String> _sortItem(String sortBy, String label) {
+    return CheckedPopupMenuItem(
+      value: sortBy,
+      checked: (_bloc.sortBy ?? 'default') == sortBy,
+      child: Text(label),
+    );
   }
 
   @override
@@ -59,6 +64,17 @@ class _ProvidersPageState extends State<ProvidersPage> {
         appBar: AppBar(
           title: const Text('Providers'),
           actions: [
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.sort),
+              onSelected: (sortBy) =>
+                  _bloc.add(SortProviders(sortBy == 'default' ? null : sortBy)),
+              itemBuilder: (_) => [
+                _sortItem('default', 'Default'),
+                _sortItem('rating', 'Rating: high to low'),
+                _sortItem('hourlyRate', 'Rate: low to high'),
+                _sortItem('experience', 'Experience: high to low'),
+              ],
+            ),
             IconButton(onPressed: _openFilters, icon: const Icon(Icons.tune)),
           ],
         ),
