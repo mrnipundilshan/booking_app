@@ -6,6 +6,7 @@ import 'package:booking_app/features/home/presentation/providers_page.dart';
 import 'package:booking_app/features/home/presentation/widgets/category_card.dart';
 import 'package:booking_app/features/providers/presentation/provider_details_page.dart';
 import 'package:booking_app/core/common/widgets/provider_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,7 +47,21 @@ class _HomeState extends State<Home> {
     return BlocProvider.value(
       value: _bloc,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Categories')),
+        appBar: AppBar(
+          title: Text('home.title'.tr(context: context)),
+          actions: [
+            PopupMenuButton<Locale>(
+              icon: const Icon(Icons.translate),
+              tooltip: 'home.language'.tr(context: context),
+              initialValue: context.locale,
+              onSelected: (locale) => context.setLocale(locale),
+              itemBuilder: (_) => const [
+                PopupMenuItem(value: Locale('en'), child: Text('English')),
+                PopupMenuItem(value: Locale('si'), child: Text('සිංහල')),
+              ],
+            ),
+          ],
+        ),
         body: Column(
           children: [
             Padding(
@@ -55,7 +70,7 @@ class _HomeState extends State<Home> {
                 onChanged: _onSearchChanged,
                 textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
-                  hintText: 'Search providers by name or skill',
+                  hintText: 'home.search_hint'.tr(context: context),
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -79,7 +94,14 @@ class _HomeState extends State<Home> {
 
         HomeLoaded loaded when loaded.isSearching =>
           loaded.results.isEmpty
-              ? Center(child: Text('No results for "${loaded.query}"'))
+              ? Center(
+                  child: Text(
+                    'home.no_results'.tr(
+                      context: context,
+                      namedArgs: {'query': loaded.query},
+                    ),
+                  ),
+                )
               : ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   itemCount: loaded.results.length,

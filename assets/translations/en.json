@@ -1,0 +1,13 @@
+{
+  "home": {
+    "title": "Categories",
+    "search_hint": "Search providers by name or skill",
+    "no_results": "No results for \"{query}\"",
+    "language": "Language"
+  },
+  "nav": {
+    "home": "Home",
+    "providers": "Providers",
+    "bookings": "Bookings"
+  }
+}

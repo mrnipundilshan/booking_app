@@ -1,4 +1,5 @@
 import 'package:booking_app/features/shell/main_shell.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MainApp extends StatelessWidget {
@@ -6,6 +7,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MainShell());
+    return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      home: const MainShell(),
+    );
   }
 }

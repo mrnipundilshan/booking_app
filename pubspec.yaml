@@ -7,6 +7,7 @@ environment:
   sdk: ^3.11.5
 
 dependencies:
+  easy_localization: ^3.0.8
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
@@ -25,3 +26,4 @@ flutter:
 
   assets:
     - assets/data/data.json
+    - assets/translations/

@@ -1,6 +1,7 @@
 import 'package:booking_app/features/booking/presentation/my_bookings_page.dart';
 import 'package:booking_app/features/home/presentation/home.dart';
 import 'package:booking_app/features/providers/presentation/providers_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MainShell extends StatefulWidget {
@@ -31,21 +32,21 @@ class _MainShellState extends State<MainShell> {
           if (i == 2 && _index != 2) _bookingsVersion++;
           _index = i;
         }),
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home),
+            label: 'nav.home'.tr(context: context),
           ),
           NavigationDestination(
-            icon: Icon(Icons.people_outline),
-            selectedIcon: Icon(Icons.people),
-            label: 'Providers',
+            icon: const Icon(Icons.people_outline),
+            selectedIcon: const Icon(Icons.people),
+            label: 'nav.providers'.tr(context: context),
           ),
           NavigationDestination(
-            icon: Icon(Icons.event_note_outlined),
-            selectedIcon: Icon(Icons.event_note),
-            label: 'Bookings',
+            icon: const Icon(Icons.event_note_outlined),
+            selectedIcon: const Icon(Icons.event_note),
+            label: 'nav.bookings'.tr(context: context),
           ),
         ],
       ),
