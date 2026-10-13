@@ -22,6 +22,16 @@ class BookingLocalDataSourceImpl implements BookingLocalDataSource {
   }
 
   @override
+  Future<List<BookingModel>> getBookingsForProvider(String providerId) async {
+    final rows = await _db.query(
+      _table,
+      where: 'providerId = ?',
+      whereArgs: [providerId],
+    );
+    return rows.map(BookingModel.fromJson).toList();
+  }
+
+  @override
   Future<void> saveBooking(BookingModel booking) async {
     await _db.insert(_table, booking.toJson());
   }

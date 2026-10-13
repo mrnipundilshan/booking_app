@@ -8,6 +8,45 @@
   "nav": {
     "home": "මුල් පිටුව",
     "providers": "සේවා සපයන්නන්",
-    "bookings": "වෙන්කිරීම්"
+    "bookings": "වෙන්කිරීම්",
+    "jobs": "රැකියා",
+    "profile": "පැතිකඩ"
+  },
+  "jobs": {
+    "title": "රැකියා",
+    "pending_jobs": "පොරොත්තු රැකියා",
+    "total_earnings": "මුළු ඉපැයීම්",
+    "earnings_caption": "සම්පූර්ණ කළ රැකියාවලින්",
+    "empty": "තවම රැකියා නැත",
+    "hours": {
+      "one": "පැය {}",
+      "other": "පැය {}"
+    },
+    "reject_title": "රැකියාව ප්‍රතික්ෂේප කරන්නද?",
+    "reject_body": "{customer} ගේ {date}, {slot} වෙන්කිරීම ප්‍රතික්ෂේප කෙරේ. මෙය ආපසු හැරවිය නොහැක.",
+    "keep": "තබා ගන්න"
+  },
+  "status": {
+    "pending": "පොරොත්තුවෙන්",
+    "confirmed": "තහවුරු කළ",
+    "inProgress": "සිදු වෙමින්",
+    "completed": "සම්පූර්ණයි",
+    "cancelled": "අවලංගු කළ",
+    "rejected": "ප්‍රතික්ෂේප කළ"
+  },
+  "actions": {
+    "accept": "පිළිගන්න",
+    "reject": "ප්‍රතික්ෂේප කරන්න",
+    "start": "රැකියාව අරඹන්න",
+    "complete": "සම්පූර්ණ ලෙස සලකුණු කරන්න"
+  },
+  "profile": {
+    "title": "පැතිකඩ",
+    "customer": "පාරිභෝගික",
+    "customer_subtitle": "සේවා වෙන්කිරීම",
+    "provider_id": "සපයන්නා හැඳුනුම: {id}",
+    "provider_mode": "සේවා සපයන්නා ප්‍රකාරය",
+    "provider_mode_on": "සේවා සපයන්නා {name} ලෙස ක්‍රියා කරයි",
+    "provider_mode_off": "සේවා සපයන්නෙකු ලෙස රැකියා කළමනාකරණයට සක්‍රිය කරන්න"
   }
 }

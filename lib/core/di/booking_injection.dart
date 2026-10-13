@@ -6,11 +6,15 @@ import 'package:booking_app/features/booking/data/datasources/booking_remote_dat
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource_impl.dart';
 import 'package:booking_app/features/booking/data/repositories/booking_repository_impl.dart';
 import 'package:booking_app/features/booking/domain/repositories/booking_repository.dart';
+import 'package:booking_app/features/booking/domain/usecases/apply_provider_action_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/cancel_booking_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/create_booking_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/get_booked_slots_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/get_my_bookings_usecase.dart';
+import 'package:booking_app/features/booking/domain/usecases/get_provider_jobs_usecase.dart';
+import 'package:booking_app/features/booking/domain/usecases/watch_booking_changes_usecase.dart';
 import 'package:booking_app/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:booking_app/features/booking/presentation/bloc/jobs_bloc.dart';
 import 'package:booking_app/features/booking/presentation/bloc/my_bookings_bloc.dart';
 
 Future<void> initBookingInjection() async {
@@ -31,8 +35,12 @@ Future<void> initBookingInjection() async {
   sl.registerLazySingleton(() => CreateBookingUseCase(sl()));
   sl.registerLazySingleton(() => GetMyBookingsUseCase(sl()));
   sl.registerLazySingleton(() => CancelBookingUseCase(sl()));
+  sl.registerLazySingleton(() => GetProviderJobsUseCase(sl()));
+  sl.registerLazySingleton(() => ApplyProviderActionUseCase(sl()));
+  sl.registerLazySingleton(() => WatchBookingChangesUseCase(sl()));
 
   // presentation
   sl.registerFactory(() => BookingBloc(sl(), sl()));
-  sl.registerFactory(() => MyBookingsBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => MyBookingsBloc(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => JobsBloc(sl(), sl(), sl(), sl()));
 }

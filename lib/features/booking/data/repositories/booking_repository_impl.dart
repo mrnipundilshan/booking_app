@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:booking_app/features/booking/data/datasources/booking_local_datasource.dart';
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource.dart';
 import 'package:booking_app/features/booking/data/models/booking_model.dart';
@@ -5,15 +7,20 @@ import 'package:booking_app/features/booking/data/models/create_booking_request.
 import 'package:booking_app/features/booking/data/models/get_booked_slots_request.dart';
 import 'package:booking_app/features/booking/domain/entities/booking_entity.dart';
 import 'package:booking_app/features/booking/domain/entities/booking_status.dart';
+import 'package:booking_app/features/booking/domain/entities/provider_action.dart';
 import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
 import 'package:booking_app/features/booking/domain/repositories/booking_repository.dart';
 import 'package:booking_app/features/booking/domain/usecases/create_booking_usecase.dart';
 
 class BookingRepositoryImpl implements BookingRepository {
-  const BookingRepositoryImpl(this._remote, this._local);
+  BookingRepositoryImpl(this._remote, this._local);
 
   final BookingRemoteDataSource _remote;
   final BookingLocalDataSource _local;
+  final _changes = StreamController<void>.broadcast();
+
+  @override
+  Stream<void> get changes => _changes.stream;
 
   @override
   Future<Set<TimeSlot>> getBookedSlots(String providerId, DateTime date) async {
@@ -51,6 +58,7 @@ class BookingRepositoryImpl implements BookingRepository {
       ),
     );
     await _local.saveBooking(booking);
+    _changes.add(null);
     return booking;
   }
 
@@ -80,6 +88,39 @@ class BookingRepositoryImpl implements BookingRepository {
       'status': BookingStatus.cancelled.name,
     });
     await _local.updateBooking(cancelled);
+    _changes.add(null);
     return cancelled;
+  }
+
+  @override
+  Future<List<BookingEntity>> getProviderJobs(String providerId) async {
+    final jobs = await _local.getBookingsForProvider(providerId);
+    return jobs..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+  }
+
+  @override
+  Future<BookingEntity> applyProviderAction({
+    required String providerId,
+    required String bookingId,
+    required ProviderAction action,
+  }) async {
+    final booking = await _local.getBooking(bookingId);
+    if (booking == null || booking.providerId != providerId) {
+      throw const BookingException('Job not found.');
+    }
+    if (!action.canApplyTo(booking.status)) {
+      throw BookingException(
+        'Cannot ${action.label.toLowerCase()} a job that is '
+        '${booking.status.label.toLowerCase()}.',
+      );
+    }
+
+    final updated = BookingModel.fromJson({
+      ...booking.toJson(),
+      'status': action.to.name,
+    });
+    await _local.updateBooking(updated);
+    _changes.add(null);
+    return updated;
   }
 }

@@ -3,6 +3,7 @@ import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
 
 abstract class BookingLocalDataSource {
   Future<List<BookingModel>> getBookings();
+  Future<List<BookingModel>> getBookingsForProvider(String providerId);
   Future<void> saveBooking(BookingModel booking);
   Future<BookingModel?> getBooking(String bookingId);
   Future<void> updateBooking(BookingModel booking);

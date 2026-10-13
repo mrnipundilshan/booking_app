@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:booking_app/core/common/entities/provider_entity.dart';
 import 'package:booking_app/features/booking/domain/entities/booking_entity.dart';
 import 'package:booking_app/features/booking/domain/usecases/cancel_booking_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/get_my_bookings_usecase.dart';
+import 'package:booking_app/features/booking/domain/usecases/watch_booking_changes_usecase.dart';
 import 'package:booking_app/features/home/domain/usecases/get_categories_usecase.dart';
 import 'package:booking_app/features/providers/domain/usecases/get_all_providers_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,14 +21,25 @@ class MyBookingsBloc extends Bloc<MyBookingsEvent, MyBookingsState> {
 
   final CancelBookingUseCase _cancelBooking;
 
+  late final StreamSubscription<void> _changes;
+
   MyBookingsBloc(
     this._getMyBookings,
     this._getAllProviders,
     this._getCategories,
     this._cancelBooking,
+    WatchBookingChangesUseCase watchChanges,
   ) : super(const MyBookingsLoading()) {
     on<LoadMyBookings>(_onLoad);
     on<CancelBooking>(_onCancel);
+    on<MyBookingsChanged>(_onChanged);
+    _changes = watchChanges().listen((_) => add(const MyBookingsChanged()));
+  }
+
+  @override
+  Future<void> close() async {
+    await _changes.cancel();
+    return super.close();
   }
 
   Future<void> _onLoad(
@@ -77,10 +91,31 @@ class MyBookingsBloc extends Bloc<MyBookingsEvent, MyBookingsState> {
     }
   }
 
+  Future<void> _onChanged(
+    MyBookingsChanged event,
+    Emitter<MyBookingsState> emit,
+  ) async {
+    if (state is! MyBookingsLoaded) return;
+    try {
+      final bookings = await _getMyBookings();
+      final latest = state;
+      if (latest is! MyBookingsLoaded) return;
+      emit(
+        _loaded(
+          bookings,
+          providers: latest.providers,
+          categoryNames: latest.categoryNames,
+          cancellingId: latest.cancellingId,
+        ),
+      );
+    } catch (_) {}
+  }
+
   MyBookingsLoaded _loaded(
     List<BookingEntity> bookings, {
     required Map<String, ProviderEntity> providers,
     required Map<String, String> categoryNames,
+    String? cancellingId,
     String? message,
   }) {
     int byStart(BookingEntity a, BookingEntity b) =>
@@ -93,6 +128,7 @@ class MyBookingsBloc extends Bloc<MyBookingsEvent, MyBookingsState> {
         ..sort((a, b) => byStart(b, a)),
       providers: providers,
       categoryNames: categoryNames,
+      cancellingId: cancellingId,
       message: message,
     );
   }

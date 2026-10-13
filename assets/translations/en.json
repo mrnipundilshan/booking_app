@@ -8,6 +8,45 @@
   "nav": {
     "home": "Home",
     "providers": "Providers",
-    "bookings": "Bookings"
+    "bookings": "Bookings",
+    "jobs": "Jobs",
+    "profile": "Profile"
+  },
+  "jobs": {
+    "title": "Jobs",
+    "pending_jobs": "Pending jobs",
+    "total_earnings": "Total earnings",
+    "earnings_caption": "From completed jobs",
+    "empty": "No jobs yet",
+    "hours": {
+      "one": "{} hour",
+      "other": "{} hours"
+    },
+    "reject_title": "Reject job?",
+    "reject_body": "{customer}'s booking on {date}, {slot} will be rejected. This cannot be undone.",
+    "keep": "Keep job"
+  },
+  "status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "rejected": "Rejected"
+  },
+  "actions": {
+    "accept": "Accept",
+    "reject": "Reject",
+    "start": "Start job",
+    "complete": "Mark complete"
+  },
+  "profile": {
+    "title": "Profile",
+    "customer": "Customer",
+    "customer_subtitle": "Booking services",
+    "provider_id": "Provider ID: {id}",
+    "provider_mode": "Provider mode",
+    "provider_mode_on": "Acting as provider {name}",
+    "provider_mode_off": "Switch on to manage jobs as a provider"
   }
 }

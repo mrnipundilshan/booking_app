@@ -13,3 +13,7 @@ final class CancelBooking extends MyBookingsEvent {
 
   final String bookingId;
 }
+
+final class MyBookingsChanged extends MyBookingsEvent {
+  const MyBookingsChanged();
+}
