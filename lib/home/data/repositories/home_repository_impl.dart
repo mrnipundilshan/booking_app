@@ -1,6 +1,8 @@
 import 'package:booking_app/home/data/datasources/home_remote_datasource.dart';
 import 'package:booking_app/home/data/models/get_categories_request.dart';
+import 'package:booking_app/home/data/models/get_providers_request.dart';
 import 'package:booking_app/home/domain/entities/category_entity.dart';
+import 'package:booking_app/home/domain/entities/provider_entity.dart';
 import 'package:booking_app/home/domain/repositories/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -12,5 +14,13 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<List<CategoryEntity>> getCategories() async {
     final response = await _remote.getCategories(const GetCategoriesRequest());
     return response.categories;
+  }
+
+  @override
+  Future<List<ProviderEntity>> getProviders(String categoryId) async {
+    final response = await _remote.getProviders(
+      GetProvidersRequest(categoryId: categoryId),
+    );
+    return response.providers;
   }
 }

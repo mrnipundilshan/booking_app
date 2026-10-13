@@ -1,5 +1,6 @@
 import 'package:booking_app/core/di/di.dart';
 import 'package:booking_app/home/presentation/bloc/home_bloc.dart';
+import 'package:booking_app/home/presentation/providers_page.dart';
 import 'package:booking_app/home/presentation/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,9 +45,12 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: CategoryCard(
                   category: loaded.categories[i],
-                  onTap: () {
-                    // TODO: navigate to category details
-                  },
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          ProvidersPage(category: loaded.categories[i]),
+                    ),
+                  ),
                 ),
               ),
             ),
