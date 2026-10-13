@@ -6,4 +6,5 @@ import 'package:booking_app/home/data/models/providers_response.dart';
 abstract class HomeRemoteDataSource {
   Future<CategoriesResponse> getCategories(GetCategoriesRequest request);
   Future<ProvidersResponse> getProviders(GetProvidersRequest request);
+  Future<ProvidersResponse> searchProviders(String query);
 }

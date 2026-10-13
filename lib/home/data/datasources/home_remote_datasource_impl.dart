@@ -13,18 +13,34 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<CategoriesResponse> getCategories(GetCategoriesRequest request) async {
     await Future.delayed(const Duration(seconds: 2));
-    final raw = await rootBundle.loadString('assets/data/categories.json');
+    final raw = await rootBundle.loadString('assets/data/data.json');
     return CategoriesResponse.fromJson(jsonDecode(raw));
   }
 
   @override
   Future<ProvidersResponse> getProviders(GetProvidersRequest request) async {
     await Future.delayed(const Duration(seconds: 1));
-    final raw = await rootBundle.loadString('assets/data/providers.json');
+    final raw = await rootBundle.loadString('assets/data/data.json');
     final all = ProvidersResponse.fromJson(jsonDecode(raw));
     return ProvidersResponse(
       providers: all.providers
           .where((p) => p.categoryId == request.categoryId)
+          .toList(),
+    );
+  }
+
+  @override
+  Future<ProvidersResponse> searchProviders(String query) async {
+    final raw = await rootBundle.loadString('assets/data/data.json');
+    final all = ProvidersResponse.fromJson(jsonDecode(raw));
+    final q = query.trim().toLowerCase();
+    return ProvidersResponse(
+      providers: all.providers
+          .where(
+            (p) =>
+                p.name.toLowerCase().contains(q) ||
+                p.skills.any((s) => s.toLowerCase().contains(q)),
+          )
           .toList(),
     );
   }

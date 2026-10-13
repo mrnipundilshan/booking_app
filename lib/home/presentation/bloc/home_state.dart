@@ -9,9 +9,15 @@ final class HomeLoading extends HomeState {
 }
 
 final class HomeLoaded extends HomeState {
-  const HomeLoaded(this.categories);
+  const HomeLoaded(this.categories, {this.query = '', this.results = const []});
 
   final List<CategoryEntity> categories;
+
+  final String query;
+
+  final List<ProviderEntity> results;
+
+  bool get isSearching => query.isNotEmpty;
 }
 
 final class HomeError extends HomeState {

@@ -5,6 +5,7 @@ import 'package:booking_app/home/data/repositories/home_repository_impl.dart';
 import 'package:booking_app/home/domain/repositories/home_repository.dart';
 import 'package:booking_app/home/domain/usecases/get_categories_usecase.dart';
 import 'package:booking_app/home/domain/usecases/get_providers_usecase.dart';
+import 'package:booking_app/home/domain/usecases/search_providers_usecase.dart';
 import 'package:booking_app/home/presentation/bloc/home_bloc.dart';
 import 'package:booking_app/home/presentation/bloc/providers_bloc.dart';
 
@@ -18,8 +19,9 @@ void initHomeInjection() {
   // domain
   sl.registerLazySingleton(() => GetCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => GetProvidersUseCase(sl()));
+  sl.registerLazySingleton(() => SearchProvidersUseCase(sl()));
 
   // presentation
-  sl.registerFactory(() => HomeBloc(sl()));
+  sl.registerFactory(() => HomeBloc(sl(), sl()));
   sl.registerFactory(() => ProvidersBloc(sl()));
 }

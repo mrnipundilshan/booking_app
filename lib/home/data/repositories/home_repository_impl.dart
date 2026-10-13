@@ -23,4 +23,10 @@ class HomeRepositoryImpl implements HomeRepository {
     );
     return response.providers;
   }
+
+  @override
+  Future<List<ProviderEntity>> searchProviders(String query) async {
+    final response = await _remote.searchProviders(query);
+    return response.providers;
+  }
 }
