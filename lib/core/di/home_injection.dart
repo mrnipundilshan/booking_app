@@ -1,13 +1,13 @@
 import 'package:booking_app/core/di/di.dart';
-import 'package:booking_app/home/data/datasources/home_remote_datasource.dart';
-import 'package:booking_app/home/data/datasources/home_remote_datasource_impl.dart';
-import 'package:booking_app/home/data/repositories/home_repository_impl.dart';
-import 'package:booking_app/home/domain/repositories/home_repository.dart';
-import 'package:booking_app/home/domain/usecases/get_categories_usecase.dart';
-import 'package:booking_app/home/domain/usecases/get_providers_usecase.dart';
-import 'package:booking_app/home/domain/usecases/search_providers_usecase.dart';
-import 'package:booking_app/home/presentation/bloc/home_bloc.dart';
-import 'package:booking_app/home/presentation/bloc/providers_bloc.dart';
+import 'package:booking_app/features/home/data/datasources/home_remote_datasource.dart';
+import 'package:booking_app/features/home/data/datasources/home_remote_datasource_impl.dart';
+import 'package:booking_app/features/home/data/repositories/home_repository_impl.dart';
+import 'package:booking_app/features/home/domain/repositories/home_repository.dart';
+import 'package:booking_app/features/home/domain/usecases/get_categories_usecase.dart';
+import 'package:booking_app/features/home/domain/usecases/get_providers_usecase.dart';
+import 'package:booking_app/features/home/domain/usecases/search_providers_usecase.dart';
+import 'package:booking_app/features/home/presentation/bloc/home_bloc.dart';
+import 'package:booking_app/features/home/presentation/bloc/providers_bloc.dart';
 
 void initHomeInjection() {
   // data

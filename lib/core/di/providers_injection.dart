@@ -1,12 +1,12 @@
 import 'package:booking_app/core/di/di.dart';
-import 'package:booking_app/providers/data/datasources/providers_remote_datasource.dart';
-import 'package:booking_app/providers/data/datasources/providers_remote_datasource_impl.dart';
-import 'package:booking_app/providers/data/repositories/providers_repository_impl.dart';
-import 'package:booking_app/providers/domain/repositories/providers_repository.dart';
-import 'package:booking_app/providers/domain/usecases/get_all_providers_usecase.dart';
-import 'package:booking_app/providers/domain/usecases/sort_providers_usecase.dart';
-import 'package:booking_app/providers/domain/usecases/filter_providers_usecase.dart';
-import 'package:booking_app/providers/presentation/bloc/providers_bloc.dart';
+import 'package:booking_app/features/providers/data/datasources/providers_remote_datasource.dart';
+import 'package:booking_app/features/providers/data/datasources/providers_remote_datasource_impl.dart';
+import 'package:booking_app/features/providers/data/repositories/providers_repository_impl.dart';
+import 'package:booking_app/features/providers/domain/repositories/providers_repository.dart';
+import 'package:booking_app/features/providers/domain/usecases/get_all_providers_usecase.dart';
+import 'package:booking_app/features/providers/domain/usecases/sort_providers_usecase.dart';
+import 'package:booking_app/features/providers/domain/usecases/filter_providers_usecase.dart';
+import 'package:booking_app/features/providers/presentation/bloc/providers_bloc.dart';
 
 void initProvidersInjection() {
   // data
