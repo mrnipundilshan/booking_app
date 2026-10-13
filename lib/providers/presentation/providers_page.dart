@@ -3,6 +3,7 @@ import 'package:booking_app/home/domain/entities/category_entity.dart';
 import 'package:booking_app/home/domain/usecases/get_categories_usecase.dart';
 import 'package:booking_app/providers/presentation/bloc/providers_bloc.dart';
 import 'package:booking_app/providers/presentation/widgets/provider_filter_sheet.dart';
+import 'package:booking_app/providers/presentation/provider_details_page.dart';
 import 'package:booking_app/core/common/widgets/provider_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,8 +93,12 @@ class _ProvidersPageState extends State<ProvidersPage> {
                   : ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       itemCount: loaded.providers.length,
-                      itemBuilder: (_, i) =>
-                          ProviderCard(provider: loaded.providers[i]),
+                      itemBuilder: (_, i) => ProviderCard(
+                        provider: loaded.providers[i],
+                        onTap: () => Navigator.of(
+                          context,
+                        ).push(ProviderDetailsPage.route(loaded.providers[i])),
+                      ),
                     ),
           },
         ),

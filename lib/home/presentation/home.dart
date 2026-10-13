@@ -4,6 +4,7 @@ import 'package:booking_app/core/di/di.dart';
 import 'package:booking_app/home/presentation/bloc/home_bloc.dart';
 import 'package:booking_app/home/presentation/providers_page.dart';
 import 'package:booking_app/home/presentation/widgets/category_card.dart';
+import 'package:booking_app/providers/presentation/provider_details_page.dart';
 import 'package:booking_app/core/common/widgets/provider_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,8 +83,12 @@ class _HomeState extends State<Home> {
               : ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   itemCount: loaded.results.length,
-                  itemBuilder: (_, i) =>
-                      ProviderCard(provider: loaded.results[i]),
+                  itemBuilder: (_, i) => ProviderCard(
+                    provider: loaded.results[i],
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(ProviderDetailsPage.route(loaded.results[i])),
+                  ),
                 ),
 
         HomeLoaded loaded => GridView.builder(
