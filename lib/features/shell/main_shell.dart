@@ -1,3 +1,4 @@
+import 'package:booking_app/features/booking/presentation/my_bookings_page.dart';
 import 'package:booking_app/features/home/presentation/home.dart';
 import 'package:booking_app/features/providers/presentation/providers_page.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _MainShellState extends State<MainShell> {
     return Scaffold(
       body: IndexedStack(
         index: _index,
-        children: const [Home(), ProvidersPage()],
+        children: const [Home(), ProvidersPage(), MyBookingsPage()],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
@@ -32,6 +33,11 @@ class _MainShellState extends State<MainShell> {
             icon: Icon(Icons.people_outline),
             selectedIcon: Icon(Icons.people),
             label: 'Providers',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.event_note_outlined),
+            selectedIcon: Icon(Icons.event_note),
+            label: 'Bookings',
           ),
         ],
       ),

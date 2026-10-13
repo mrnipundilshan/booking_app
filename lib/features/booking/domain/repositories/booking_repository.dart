@@ -6,4 +6,6 @@ abstract class BookingRepository {
   Future<Set<TimeSlot>> getBookedSlots(String providerId, DateTime date);
 
   Future<BookingEntity> createBooking(CreateBookingParams params);
+
+  Future<List<BookingEntity>> getMyBookings();
 }

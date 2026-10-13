@@ -5,6 +5,7 @@ import 'package:booking_app/features/booking/data/models/get_booked_slots_reques
 abstract class BookingRemoteDataSource {
   Future<List<BookingModel>> getBookings(GetBookedSlotsRequest request);
   Future<BookingModel> createBooking(CreateBookingRequest request);
+  Future<List<BookingModel>> getMyBookings();
 }
 
 class BookingException implements Exception {

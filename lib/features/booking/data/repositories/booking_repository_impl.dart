@@ -34,4 +34,15 @@ class BookingRepositoryImpl implements BookingRepository {
       ),
     );
   }
+
+  @override
+  Future<List<BookingEntity>> getMyBookings() async {
+    final bookings = await _remote.getMyBookings();
+    return bookings..sort((a, b) {
+      final byDate = a.date.compareTo(b.date);
+      return byDate != 0
+          ? byDate
+          : a.timeSlot.startHour.compareTo(b.timeSlot.startHour);
+    });
+  }
 }

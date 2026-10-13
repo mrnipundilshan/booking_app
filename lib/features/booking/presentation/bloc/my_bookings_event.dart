@@ -1,0 +1,9 @@
+part of 'my_bookings_bloc.dart';
+
+class MyBookingsEvent {
+  const MyBookingsEvent();
+}
+
+final class LoadMyBookings extends MyBookingsEvent {
+  const LoadMyBookings();
+}

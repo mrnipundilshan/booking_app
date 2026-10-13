@@ -22,3 +22,4 @@ flutter:
 
   assets:
     - assets/data/data.json
+    - assets/data/bookings.json

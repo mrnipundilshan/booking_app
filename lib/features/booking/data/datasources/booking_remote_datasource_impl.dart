@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource.dart';
@@ -5,6 +6,7 @@ import 'package:booking_app/features/booking/data/models/booking_model.dart';
 import 'package:booking_app/features/booking/data/models/create_booking_request.dart';
 import 'package:booking_app/features/booking/data/models/get_booked_slots_request.dart';
 import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   BookingRemoteDataSourceImpl() : _bookings = _seed(DateTime.now());
@@ -44,6 +46,15 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
     });
     _bookings.add(booking);
     return booking;
+  }
+
+  @override
+  Future<List<BookingModel>> getMyBookings() async {
+    await Future.delayed(const Duration(seconds: 2));
+    final raw = await rootBundle.loadString('assets/data/bookings.json');
+    return (jsonDecode(raw)['bookings'] as List)
+        .map((b) => BookingModel.fromJson(b))
+        .toList();
   }
 
   String _generateId(DateTime now) {
