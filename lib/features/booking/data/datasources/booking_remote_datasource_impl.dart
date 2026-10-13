@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource.dart';
 import 'package:booking_app/features/booking/data/models/booking_model.dart';
 import 'package:booking_app/features/booking/data/models/create_booking_request.dart';
@@ -38,11 +40,30 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
 
     final booking = BookingModel.fromJson({
       ...request.toJson(),
-      'id': 'b${DateTime.now().microsecondsSinceEpoch}',
+      'id': _generateId(DateTime.now()),
     });
     _bookings.add(booking);
     return booking;
   }
+
+  String _generateId(DateTime now) {
+    final date =
+        '${now.year}'
+        '${now.month.toString().padLeft(2, '0')}'
+        '${now.day.toString().padLeft(2, '0')}';
+    String id;
+    do {
+      final suffix = List.generate(
+        4,
+        (_) => _idChars[_random.nextInt(_idChars.length)],
+      ).join();
+      id = 'FX-$date-$suffix';
+    } while (_bookings.any((b) => b.id == id));
+    return id;
+  }
+
+  static const _idChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  static final _random = Random.secure();
 
   static bool _isSameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;

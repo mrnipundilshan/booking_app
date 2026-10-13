@@ -5,6 +5,8 @@ import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
 import 'package:booking_app/features/booking/domain/usecases/create_booking_usecase.dart';
 import 'package:booking_app/features/booking/domain/validators/booking_validators.dart';
 import 'package:booking_app/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:booking_app/features/booking/presentation/booking_confirmation_page.dart';
+import 'package:booking_app/features/booking/presentation/widgets/cost_breakdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -124,19 +126,9 @@ class _BookingFormState extends State<_BookingForm> {
     }
 
     if (state.status == BookingStatus.success && state.booking != null) {
-      final booking = state.booking!;
-      final date = MaterialLocalizations.of(
-        context,
-      ).formatMediumDate(booking.date);
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(
-            'Booking confirmed with ${widget.provider.name} on $date, '
-            '${booking.timeSlot.label}',
-          ),
-        ),
+      Navigator.of(context).pushReplacement(
+        BookingConfirmationPage.route(widget.provider, state.booking!),
       );
-      Navigator.of(context).pop();
     }
   }
 
@@ -230,7 +222,7 @@ class _BookingFormState extends State<_BookingForm> {
               validator: BookingValidators.description,
             ),
             const SizedBox(height: 16),
-            _CostBreakdown(
+            CostBreakdown(
               hourlyRate: widget.provider.hourlyRate,
               hours: _hours,
               cost: BookingCost.calculate(
@@ -406,110 +398,6 @@ class _BookingFormState extends State<_BookingForm> {
   static String _formatHour(int hour) {
     final h = hour % 12 == 0 ? 12 : hour % 12;
     return '$h ${hour < 12 ? 'AM' : 'PM'}';
-  }
-}
-
-class _CostBreakdown extends StatelessWidget {
-  const _CostBreakdown({
-    required this.hourlyRate,
-    required this.hours,
-    required this.cost,
-  });
-
-  final int hourlyRate;
-  final int hours;
-  final BookingCost cost;
-
-  static String _formatLkr(double amount) {
-    final parts = amount.toStringAsFixed(2).split('.');
-    final whole = parts[0].replaceAllMapped(
-      RegExp(r'\B(?=(\d{3})+(?!\d))'),
-      (_) => ',',
-    );
-    return 'LKR $whole.${parts[1]}';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final percent = (BookingCost.weekendSurchargeRate * 100).round();
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Cost breakdown', style: theme.textTheme.titleMedium),
-            const SizedBox(height: 12),
-            _CostRow(
-              label: 'Labour',
-              detail:
-                  '${_formatLkr(hourlyRate.toDouble())} × $hours '
-                  '${hours == 1 ? 'hour' : 'hours'}',
-              amount: _formatLkr(cost.labour),
-            ),
-            _CostRow(
-              label: 'Visiting charge',
-              detail: 'Fixed',
-              amount: _formatLkr(cost.visitingCharge),
-            ),
-            _CostRow(
-              label: 'Weekend surcharge',
-              detail: '$percent% of labour, Saturdays only',
-              amount: _formatLkr(cost.weekendSurcharge),
-            ),
-            const Divider(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: Text('Total', style: theme.textTheme.titleMedium),
-                ),
-                Text(
-                  _formatLkr(cost.total),
-                  style: theme.textTheme.titleMedium,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _CostRow extends StatelessWidget {
-  const _CostRow({
-    required this.label,
-    required this.detail,
-    required this.amount,
-  });
-
-  final String label;
-  final String detail;
-  final String amount;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label),
-                Text(detail, style: theme.textTheme.bodySmall),
-              ],
-            ),
-          ),
-          Text(amount),
-        ],
-      ),
-    );
   }
 }
 
