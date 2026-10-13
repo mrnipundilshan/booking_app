@@ -1,5 +1,5 @@
 import 'package:booking_app/home/presentation/home.dart';
-import 'package:booking_app/shell/providers_tab.dart';
+import 'package:booking_app/providers/presentation/providers_page.dart';
 import 'package:flutter/material.dart';
 
 class MainShell extends StatefulWidget {
@@ -17,7 +17,7 @@ class _MainShellState extends State<MainShell> {
     return Scaffold(
       body: IndexedStack(
         index: _index,
-        children: const [Home(), ProvidersTab()],
+        children: const [Home(), ProvidersPage()],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,

@@ -1,4 +1,4 @@
-import 'package:booking_app/home/domain/entities/provider_entity.dart';
+import 'package:booking_app/core/common/entities/provider_entity.dart';
 import 'package:booking_app/home/domain/repositories/home_repository.dart';
 
 class SearchProvidersUseCase {

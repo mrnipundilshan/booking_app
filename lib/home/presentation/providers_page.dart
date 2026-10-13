@@ -1,7 +1,7 @@
 import 'package:booking_app/core/di/di.dart';
 import 'package:booking_app/home/domain/entities/category_entity.dart';
 import 'package:booking_app/home/presentation/bloc/providers_bloc.dart';
-import 'package:booking_app/home/presentation/widgets/provider_card.dart';
+import 'package:booking_app/core/common/widgets/provider_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

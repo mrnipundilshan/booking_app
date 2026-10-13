@@ -4,7 +4,7 @@ import 'package:booking_app/home/data/datasources/home_remote_datasource.dart';
 import 'package:booking_app/home/data/models/categories_response.dart';
 import 'package:booking_app/home/data/models/get_categories_request.dart';
 import 'package:booking_app/home/data/models/get_providers_request.dart';
-import 'package:booking_app/home/data/models/providers_response.dart';
+import 'package:booking_app/core/common/models/providers_response.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {

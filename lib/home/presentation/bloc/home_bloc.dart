@@ -1,5 +1,5 @@
 import 'package:booking_app/home/domain/entities/category_entity.dart';
-import 'package:booking_app/home/domain/entities/provider_entity.dart';
+import 'package:booking_app/core/common/entities/provider_entity.dart';
 import 'package:booking_app/home/domain/usecases/get_categories_usecase.dart';
 import 'package:booking_app/home/domain/usecases/search_providers_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
