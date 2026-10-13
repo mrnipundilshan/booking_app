@@ -3,6 +3,7 @@ import 'package:booking_app/features/booking/data/datasources/booking_remote_dat
 import 'package:booking_app/features/booking/data/datasources/booking_remote_datasource_impl.dart';
 import 'package:booking_app/features/booking/data/repositories/booking_repository_impl.dart';
 import 'package:booking_app/features/booking/domain/repositories/booking_repository.dart';
+import 'package:booking_app/features/booking/domain/usecases/cancel_booking_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/create_booking_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/get_booked_slots_usecase.dart';
 import 'package:booking_app/features/booking/domain/usecases/get_my_bookings_usecase.dart';
@@ -22,8 +23,9 @@ void initBookingInjection() {
   sl.registerLazySingleton(() => GetBookedSlotsUseCase(sl()));
   sl.registerLazySingleton(() => CreateBookingUseCase(sl()));
   sl.registerLazySingleton(() => GetMyBookingsUseCase(sl()));
+  sl.registerLazySingleton(() => CancelBookingUseCase(sl()));
 
   // presentation
   sl.registerFactory(() => BookingBloc(sl(), sl()));
-  sl.registerFactory(() => MyBookingsBloc(sl(), sl()));
+  sl.registerFactory(() => MyBookingsBloc(sl(), sl(), sl(), sl()));
 }

@@ -1,4 +1,5 @@
 import 'package:booking_app/features/booking/domain/entities/booking_entity.dart';
+import 'package:booking_app/features/booking/domain/entities/booking_status.dart';
 import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
 
 class BookingModel extends BookingEntity {
@@ -12,6 +13,7 @@ class BookingModel extends BookingEntity {
     required super.timeSlot,
     required super.estimatedHours,
     required super.description,
+    required super.status,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,9 @@ class BookingModel extends BookingEntity {
       timeSlot: TimeSlot.values.byName(json['timeSlot'] as String),
       estimatedHours: (json['estimatedHours'] as num).toInt(),
       description: json['description'] as String,
+      status: json['status'] == null
+          ? BookingStatus.pending
+          : BookingStatus.values.byName(json['status'] as String),
     );
   }
 
@@ -38,5 +43,6 @@ class BookingModel extends BookingEntity {
     'timeSlot': timeSlot.name,
     'estimatedHours': estimatedHours,
     'description': description,
+    'status': status.name,
   };
 }

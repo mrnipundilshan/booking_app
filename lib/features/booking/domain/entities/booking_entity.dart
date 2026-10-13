@@ -1,3 +1,4 @@
+import 'package:booking_app/features/booking/domain/entities/booking_status.dart';
 import 'package:booking_app/features/booking/domain/entities/time_slot.dart';
 
 class BookingEntity {
@@ -11,6 +12,7 @@ class BookingEntity {
     required this.timeSlot,
     required this.estimatedHours,
     required this.description,
+    required this.status,
   });
 
   final String id;
@@ -22,4 +24,14 @@ class BookingEntity {
   final TimeSlot timeSlot;
   final int estimatedHours;
   final String description;
+  final BookingStatus status;
+
+  static const cancellationNotice = Duration(hours: 24);
+
+  DateTime get startsAt =>
+      DateTime(date.year, date.month, date.day, timeSlot.startHour);
+
+  bool canCancel(DateTime now) =>
+      (status == BookingStatus.pending || status == BookingStatus.confirmed) &&
+      startsAt.difference(now) > cancellationNotice;
 }

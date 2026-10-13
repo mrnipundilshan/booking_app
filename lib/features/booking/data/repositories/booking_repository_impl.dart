@@ -45,4 +45,8 @@ class BookingRepositoryImpl implements BookingRepository {
           : a.timeSlot.startHour.compareTo(b.timeSlot.startHour);
     });
   }
+
+  @override
+  Future<BookingEntity> cancelBooking(String bookingId) =>
+      _remote.cancelBooking(bookingId);
 }

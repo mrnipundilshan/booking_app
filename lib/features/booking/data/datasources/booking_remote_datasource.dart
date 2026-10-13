@@ -6,6 +6,7 @@ abstract class BookingRemoteDataSource {
   Future<List<BookingModel>> getBookings(GetBookedSlotsRequest request);
   Future<BookingModel> createBooking(CreateBookingRequest request);
   Future<List<BookingModel>> getMyBookings();
+  Future<BookingModel> cancelBooking(String bookingId);
 }
 
 class BookingException implements Exception {

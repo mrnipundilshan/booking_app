@@ -8,4 +8,6 @@ abstract class BookingRepository {
   Future<BookingEntity> createBooking(CreateBookingParams params);
 
   Future<List<BookingEntity>> getMyBookings();
+
+  Future<BookingEntity> cancelBooking(String bookingId);
 }
