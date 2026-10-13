@@ -1,3 +1,4 @@
+import 'package:booking_app/core/di/booking_injection.dart';
 import 'package:booking_app/core/di/home_injection.dart';
 import 'package:booking_app/core/di/providers_injection.dart';
 import 'package:get_it/get_it.dart';
@@ -8,4 +9,5 @@ Future<void> setupDi() async {
   // features
   initHomeInjection();
   initProvidersInjection();
+  initBookingInjection();
 }

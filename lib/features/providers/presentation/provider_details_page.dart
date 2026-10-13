@@ -1,5 +1,6 @@
 import 'package:booking_app/core/common/entities/provider_entity.dart';
 import 'package:booking_app/core/common/widgets/availability_badge.dart';
+import 'package:booking_app/features/booking/presentation/booking_page.dart';
 import 'package:flutter/material.dart';
 
 class ProviderDetailsPage extends StatelessWidget {
@@ -87,7 +88,9 @@ class _Details extends StatelessWidget {
           const SizedBox(height: 8),
         ],
         FilledButton(
-          onPressed: provider.isAvailable ? () {} : null,
+          onPressed: provider.isAvailable
+              ? () => Navigator.of(context).push(BookingPage.route(provider))
+              : null,
           child: const Text('Book Now'),
         ),
       ],
