@@ -1,4 +1,4 @@
-import 'package:booking_app/home/presentation/home.dart';
+import 'package:booking_app/shell/main_shell.dart';
 import 'package:flutter/material.dart';
 
 class MainApp extends StatelessWidget {
@@ -6,6 +6,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: Home());
+    return const MaterialApp(home: MainShell());
   }
 }
